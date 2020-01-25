@@ -22,7 +22,7 @@ dev-kind:
 	$(MAKE) copy-kind-ca-crt
 	CA_CRT_PATH=~/.kind/ca.crt \
 	CLUSTER_NAME=local-kind-development \
-	CONTROL_PLANE_ADDRESS=https://127.0.0.1:62183 \
+	CONTROL_PLANE_ADDRESS=$(shell kind get kubeconfig | grep server | rev | cut -d' ' -f1 | rev) \
 	BASIC_AUTH_PASSWORD=secret \
 	PORT=4000 \
 	gomon cmd/run-server.go
